@@ -4,16 +4,16 @@ from datetime import datetime, timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 
-# Přístup ke Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds_dict = {
     "type": "service_account",
-    "client_email": st.secrets["gspread"]["client_email"],
-    "private_key": st.secrets["gspread"]["private_key_id"].replace('\\n', '\n'),
+    "client_email": st.secrets["gspread"]["email"],
+    "private_key": st.secrets["gspread"]["private_key"].replace('\\n', '\n'),
 }
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open(st.secrets["gspread"]["sheet"])
+
 
 # Načíst přihlašovací údaje
 access_df = pd.DataFrame(sheet.worksheet("access").get_all_records())
