@@ -68,7 +68,7 @@ else:
 
     # Formulář pro nový odběr
     records = sheet.worksheet("data").get_all_records()
-    places = sorted(set([rec["place"] for rec in records if rec["place"].strip() != ""])) if records else []
+    places = sorted(set([rec["location"] for rec in records if rec["location"].strip() != ""])) if records else []
     places_options = places + ["➕ Přidat nové místo"]
 
     with st.form("novy_odber"):
