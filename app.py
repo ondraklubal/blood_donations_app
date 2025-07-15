@@ -64,7 +64,6 @@ if not st.session_state.logged_in:
             else:
                 st.error("Nesprávné přihlašovací údaje.")
 else:
-    params = st.query_params()
     st.title(f"Vítej, {st.session_state.username}")
 
     # Formulář pro nový odběr
