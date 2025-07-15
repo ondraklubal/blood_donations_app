@@ -43,7 +43,7 @@ if not st.session_state.logged_in:
             st.session_state.logged_in = True
             st.session_state.username = username
             st.success("Přihlášení úspěšné")
-            #st.experimental_rerun()
+            st.experimental_rerun()
         else:
             st.error("Neplatné jméno nebo heslo")
 else:
@@ -78,4 +78,4 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        #st.experimental_rerun()
+        st.experimental_rerun()
