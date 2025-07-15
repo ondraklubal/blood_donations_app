@@ -61,7 +61,8 @@ else:
             if place.strip() == "":
                 st.error("Zadej místo odběru")
             else:
-                data_ws.append_row([st.session_state.username, place, str(date)])
+                today = datetime.today().date()
+                sheet.append_row([st.session_state.username, place, str(today)])
                 st.success("Záznam uložen")
 
     # Statistiky
