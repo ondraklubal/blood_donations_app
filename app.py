@@ -106,9 +106,8 @@ else:
                 col = cols[i % 2]
             
                 with col:
-                    st.image(award["img"], width=50)
-                    st.markdown(f"**{award['name']}**")
-                    st.markdown(f"*{award['desc']}*")
+                    #st.image(award["img"], width=50)
+                    st.markdown(f"### {award['emoji']} {award['name']}")
             
                     remaining = max(0, award["needed"] - total_donations)
                     progress = min(total_donations / award["needed"], 1.0)
