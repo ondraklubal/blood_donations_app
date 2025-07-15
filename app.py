@@ -36,12 +36,12 @@ if not st.session_state.username:
     if st.button("Přihlásit"):
         if username.strip() != "":
             st.session_state.username = username
-            st.experimental_rerun()
+            #st.experimental_rerun()
 else:
     st.success(f"Přihlášen jako **{st.session_state.username}**")
     if st.button("Odhlásit se"):
         st.session_state.username = None
-        st.experimental_rerun()
+        #st.experimental_rerun()
 
     st.subheader("Nový odběr")
     with st.form("add_form"):
