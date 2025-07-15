@@ -80,7 +80,7 @@ else:
             place_input = st.text_input("Zadej nové místo odběru", value="", disabled=False)
         else:
             # Zobrazíme text_input zakázané, aby uživatel viděl, že je neaktivní
-            st.text_input("Zadej nové místo odběru", value="", disabled=True)
+            # st.text_input("Zadej nové místo odběru", value="", disabled=True)
     
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
