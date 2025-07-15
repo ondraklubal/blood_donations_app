@@ -92,6 +92,4 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        if "refresh" not in params:
-            st.query_params(refresh="1")
-            st.stop()
+        st.rerun()
