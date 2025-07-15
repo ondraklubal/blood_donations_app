@@ -71,15 +71,14 @@ else:
     places = sorted(set([rec["location"] for rec in records if rec["location"].strip() != ""])) if records else []
     places_options = places + ["-Přidat nové místo-"]
 
-    with st.form("novy_odber"):
-        place_choice = st.selectbox("Vyber místo odběru", places_options)
-        place_input = ""
-    
-        # Textové pole je vždy, ale aktivní jen když je vybráno "Přidat nové místo"
-        if place_choice == "-Přidat nové místo-":
-            place_input = st.text_input("Zadej nové místo odběru", value="", disabled=False)
+    place_choice = st.selectbox("Vyber místo odběru", places_options)
+    # Pokud vybereš "Přidat nové místo", zobrazíme textové pole mimo formulář
+    if place_choice == "-Přidat nové místo-":
+        place_input = st.text_input("Zadej nové místo odběru")
+    else:
+        place_input = place_choice
         
-    
+    with st.form("novy_odber"):
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
     
