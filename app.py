@@ -33,6 +33,8 @@ data_ws = pd.DataFrame(sheet.worksheet("data").get_all_records())
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
+params = st.query_params
+
 if not st.session_state.logged_in:
     st.title("Přihlášení")
     username = st.text_input("Uživatelské jméno")
@@ -42,8 +44,9 @@ if not st.session_state.logged_in:
         if not user.empty:
             st.session_state.logged_in = True
             st.session_state.username = username
+            st.query_params = {"refresh": str(datetime.now())}
             st.success("Přihlášení úspěšné")
-            st.query_params(refresh=str(datetime.now()))
+            
         else:
             st.error("Neplatné jméno nebo heslo")
 else:
@@ -80,5 +83,4 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        st.query_params(refresh=str(datetime.now()))
-
+        st.query_params = {"refresh": str(datetime.now())}
