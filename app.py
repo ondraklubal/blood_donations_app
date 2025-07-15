@@ -52,6 +52,7 @@ if not st.session_state.logged_in:
                 access_ws.append_row([username, password])
                 st.success("Účet vytvořen. Nyní jste přihlášen.")
                 st.session_state.username = username
+                st.rerun()
         else:
             match = access_df[(access_df["username"] == username) & (access_df["password"] == password)]
             if not match.empty:
