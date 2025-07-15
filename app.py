@@ -57,7 +57,7 @@ else:
     if donations:
         st.subheader("Statistika odběrů")
         st.write(f"🔢 Počet odběrů: **{len(donations)}**")
-        last_date = datetime.date.fromisoformat(donations[-1]["date"])
+        last_date = datetime.fromisoformat(donations[-1]["date"])
         next_possible = last_date + datetime.timedelta(weeks=10)
         st.write(f"🗓 Poslední odběr: **{last_date}**")
         st.write(f"✅ Možný další odběr: **{next_possible}**")
