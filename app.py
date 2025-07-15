@@ -6,6 +6,9 @@ import streamlit as st
 # Převést tajemství z .secrets na dict
 creds_dict = dict(st.secrets["gspread"])
 
+client = gspread.service_account_from_dict(st.secrets["gspread"])
+
+
 # Gspread potřebuje credentials jako objekt, nikoliv dict
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
