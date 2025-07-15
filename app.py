@@ -8,7 +8,7 @@ import pandas as pd
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds_dict = {
     "type": "service_account",
-    "client_email": st.secrets["gspread"]["email"],
+    "client_email": st.secrets["gspread"]["client_email"],
     "private_key": st.secrets["gspread"]["private_key"].replace('\\n', '\n'),
 }
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
