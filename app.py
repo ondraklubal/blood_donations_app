@@ -58,7 +58,7 @@ else:
             if place.strip() == "":
                 st.error("Zadej místo odběru")
             else:
-                data_ws.append_row([st.session_state.username, str(date), place])
+                data_ws.append_row([st.session_state.username, place, str(date)])
                 st.success("Záznam uložen")
 
     # Statistiky
