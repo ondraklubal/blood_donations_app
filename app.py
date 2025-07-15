@@ -62,7 +62,7 @@ else:
                 st.error("Zadej místo odběru")
             else:
                 today = datetime.today().date()
-                sheet.append_row([st.session_state.username, place, str(today)])
+                worksheet("data").append_row([st.session_state.username, place, str(today)])
                 st.success("Záznam uložen")
 
     # Statistiky
