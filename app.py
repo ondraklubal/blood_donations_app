@@ -78,9 +78,7 @@ else:
         # Textové pole je vždy, ale aktivní jen když je vybráno "Přidat nové místo"
         if place_choice == "-Přidat nové místo-":
             place_input = st.text_input("Zadej nové místo odběru", value="", disabled=False)
-        else:
-            # Zobrazíme text_input zakázané, aby uživatel viděl, že je neaktivní
-            # st.text_input("Zadej nové místo odběru", value="", disabled=True)
+        
     
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
