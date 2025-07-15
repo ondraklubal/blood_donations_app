@@ -77,7 +77,7 @@ else:
     
         # Textové pole je vždy, ale aktivní jen když je vybráno "Přidat nové místo"
         if place_choice == "-Přidat nové místo-":
-            place_input = st.text_input("Zadej nové místo odběru", value="")
+            place_input = st.text_input("Zadej nové místo odběru", value="", disabled=False)
         else:
             # Zobrazíme text_input zakázané, aby uživatel viděl, že je neaktivní
             st.text_input("Zadej nové místo odběru", value="", disabled=True)
@@ -87,7 +87,7 @@ else:
     
         if submitted:
             # Určíme výsledné místo
-            final_place = place_input.strip() if place_choice == "➕ Přidat nové místo" else place_choice
+            final_place = place_input.strip() if place_choice == "-Přidat nové místo-" else place_choice
             if final_place == "":
                 st.error("Zadej místo odběru")
             else:
