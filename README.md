@@ -15,3 +15,18 @@ http://blooddonations.streamlit.app/
 - 🔐 **Data uložena bezpečně v Google Sheetu**
 
 ---
+[ENGLISH]
+# 🩸 BloodApp – Blood Donation Record Tracker
+
+**BloodApp** is a simple web application built in Python using the [Streamlit](https://streamlit.io/) framework. It helps individuals track their blood donations, keeping a personal log of donation dates and locations, visualizing donation statistics, and monitoring progress toward official Czech Red Cross awards.
+
+---
+
+## 🚀 Features
+
+- 🧑‍💼 **User login**
+- 📝 **Add new donation records** (date and location)
+- 📊 **Donation statistics** including count and timeline
+- 🏅 **Progress visualization toward Czech Red Cross awards**
+- 🔐 **Data securely stored in a Google Sheet**
+
