@@ -47,7 +47,7 @@ else:
     st.subheader("Nový odběr")
     with st.form("add_form"):
         location = st.text_input("Místo darování")
-        date = st.date_input("Datum", value=datetime.date.today())
+        date = st.date_input("Datum", value=datetime.today())
         submitted = st.form_submit_button("Přidat odběr")
         if submitted and location.strip():
             add_donation(st.session_state.username, location.strip(), date.isoformat())
