@@ -46,9 +46,7 @@ if not st.session_state.logged_in:
             st.session_state.logged_in = True
             st.session_state.username = username
             st.success("Přihlášení úspěšné")
-            if "refresh" not in params:
-                st.query_params(refresh="1")
-                st.stop()
+            st.rerun()
             
         else:
             st.error("Neplatné jméno nebo heslo")
