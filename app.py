@@ -65,8 +65,10 @@ else:
     data_df = pd.DataFrame(data_ws.get_all_records())
     user_data = data_df[data_df["username"] == st.session_state.username]
 
+    user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
+    user_data = user_data.dropna(subset=["date"])
+
     if not user_data.empty:
-        user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
         last_donation = user_data["date"].max()
         next_possible = last_donation + timedelta(weeks=10)
         st.subheader("Statistiky")
@@ -74,7 +76,7 @@ else:
         st.write(f"Poslední odběr: {last_donation.date()}")
         st.write(f"Další možný odběr: {next_possible.date()}")
     else:
-        st.info("Zatím nemáte žádný záznam.")
+        st.info("Zatím nemáte žádný platný záznam o odběru.")
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
