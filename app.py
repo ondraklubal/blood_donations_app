@@ -33,9 +33,10 @@ data_ws = pd.DataFrame(sheet.worksheet("data").get_all_records())
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
-params = st.query_params
 
 if not st.session_state.logged_in:
+    params = st.query_params
+
     st.title("Přihlášení")
     username = st.text_input("Uživatelské jméno")
     password = st.text_input("Heslo", type="password")
@@ -44,12 +45,16 @@ if not st.session_state.logged_in:
         if not user.empty:
             st.session_state.logged_in = True
             st.session_state.username = username
-            st.query_params = {"refresh": str(datetime.now())}
             st.success("Přihlášení úspěšné")
+            if "refresh" not in params:
+                st.query_params(refresh="1")
+                st.stop()
             
         else:
             st.error("Neplatné jméno nebo heslo")
 else:
+    params = st.query_params
+
     st.title(f"Vítej, {st.session_state.username}")
 
     # Formulář pro nový odběr
@@ -87,4 +92,6 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        st.query_params = {"refresh": str(datetime.now())}
+        if "refresh" not in params:
+            st.query_params(refresh="1")
+            st.stop()
