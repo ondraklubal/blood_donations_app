@@ -85,6 +85,76 @@ else:
             st.write(f"Počet odběrů: {len(user_data)}")
             st.write(f"Poslední odběr: {last_donation.date()}")
             st.write(f"Další možný odběr: {next_possible.date()}")
+            awards = [
+            {
+                "name": "Krůpěj krve",
+                "needed": 1,
+                "desc": "Uděluje se za první odběr. Předává se na transfuzní stanici.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Blood_drop_icon.svg",  # příklad ikony
+            },
+            {
+                "name": "Bronzová medaile Prof. MUDr. Jana Janského",
+                "needed": 10,
+                "desc": "Uděluje se za 10 odběrů. Předává OS ČČK zpravidla přímo na transfuzní stanici. Průměr medaile je 27 mm.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/7/77/Medal_icon.svg",
+            },
+            {
+                "name": "Stříbrná medaile Prof. MUDr. Jana Janského",
+                "needed": 20,
+                "desc": "Uděluje se za 20 odběrů. Předává OS ČČK na slavnostním shromáždění.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/5/52/Silver_medal_icon.svg",
+            },
+            # ... další ocenění podle obrázku
+            {
+                "name": "Zlatý kříž ČČK 3. třídy",
+                "needed": 80,
+                "desc": "Uděluje se za 80 odběrů. Předává OS ČČK na slavnostním shromáždění. Průměr odznaku je 21 mm.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gold_cross_icon.svg",
+            },
+            {
+                "name": "Zlatý kříž ČČK 2. třídy",
+                "needed": 120,
+                "desc": "Uděluje se za 120 odběrů. Předává slavnostně ČČK na celokrajském shromáždění.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gold_cross_icon.svg",
+            },
+            {
+                "name": "Zlatý kříž ČČK 1. třídy",
+                "needed": 160,
+                "desc": "Uděluje se za 160 odběrů. Předává ČČK na celostátním slavnostním shromáždění.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Gold_cross_icon.svg",
+            },
+            {
+                "name": "Plaketa ČČK Dar krve - dar života",
+                "needed": 250,
+                "desc": "Uděluje se za 250 odběrů. Plaketu předává ČČK na celostátním slavnostním shromáždění. Průměr plakety je 60 mm.",
+                "img": "https://upload.wikimedia.org/wikipedia/commons/4/47/Medal_icon.svg",
+            },
+            ]
+
+            total_donations = len(user_data)  # počet odběrů uživatele
+            
+            st.title("Ocenění dárců krve a tvůj postup")
+            
+            cols = st.columns(2)
+            
+            for i, award in enumerate(awards):
+                col = cols[i % 2]
+            
+                with col:
+                    st.image(award["img"], width=50)
+                    st.markdown(f"**{award['name']}**")
+                    st.markdown(f"*{award['desc']}*")
+            
+                    remaining = max(0, award["needed"] - total_donations)
+                    progress = min(total_donations / award["needed"], 1.0)
+            
+                    if progress == 1.0:
+                        st.success("🎉 Ocenění splněno!")
+                    else:
+                        st.info(f"Zbývá {remaining} odběrů")
+            
+                    st.progress(progress)
+                    st.markdown("---")
         else:
             st.info("Nemáte žádný validní záznam.")
 
