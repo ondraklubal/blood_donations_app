@@ -9,7 +9,7 @@ scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/au
 creds_dict = {
     "type": "service_account",
     "client_email": st.secrets["gspread"]["client_email"],
-    "private_key": st.secrets["gspread"]["private_key"].replace('\\n', '\n'),
+    "private_key": st.secrets["gspread"]["private_key_id"].replace('\\n', '\n'),
 }
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
