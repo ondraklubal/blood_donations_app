@@ -27,7 +27,7 @@ sheet = client.open(st.secrets["gspread"]["sheet"])
 
 # Přístup k jednotlivým listům
 access_df = pd.DataFrame(sheet.worksheet("access").get_all_records())
-data_ws = sheet.worksheet("data")
+data_ws = pd.DataFrame(sheet.worksheet("data").get_all_records())
 
 # Přihlašování
 if "logged_in" not in st.session_state:
@@ -43,7 +43,7 @@ if not st.session_state.logged_in:
             st.session_state.logged_in = True
             st.session_state.username = username
             st.success("Přihlášení úspěšné")
-            st.experimental_set_query_params(refresh=str(datetime.now()))
+            st.query_params(refresh=str(datetime.now()))
         else:
             st.error("Neplatné jméno nebo heslo")
 else:
@@ -62,7 +62,6 @@ else:
                 st.success("Záznam uložen")
 
     # Statistiky
-    data_df = pd.DataFrame(data_ws["data"].get_all_records())
     user_data = data_df[data_df["username"] == st.session_state.username]
 
     user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
@@ -80,5 +79,5 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        st.experimental_set_query_params(refresh=str(datetime.now()))
+        st.query_params(refresh=str(datetime.now()))
 
