@@ -2,7 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Převést tajemství z .secrets na dict
 creds_dict = dict(st.secrets["gspread"])
@@ -58,7 +58,7 @@ else:
         st.subheader("Statistika odběrů")
         st.write(f"🔢 Počet odběrů: **{len(donations)}**")
         last_date = datetime.fromisoformat(donations[-1]["date"])
-        next_possible = last_date + datetime.timedelta(weeks=10)
+        plus_10_weeks = datetime.now() + timedelta(weeks=10)
         st.write(f"🗓 Poslední odběr: **{last_date}**")
         st.write(f"✅ Možný další odběr: **{next_possible}**")
 
