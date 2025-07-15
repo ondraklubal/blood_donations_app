@@ -2,6 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 import streamlit as st
+from datetime import datetime
 
 # Převést tajemství z .secrets na dict
 creds_dict = dict(st.secrets["gspread"])
