@@ -43,7 +43,7 @@ if not st.session_state.logged_in:
             st.session_state.logged_in = True
             st.session_state.username = username
             st.success("Přihlášení úspěšné")
-            st.query_params(refresh=str(datetime.now()))
+            st.query_params = {"refresh": str(datetime.now())}
         else:
             st.error("Neplatné jméno nebo heslo")
 else:
@@ -80,5 +80,5 @@ else:
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
-        st.query_params(refresh=str(datetime.now()))
+        st.query_params = {"refresh": str(datetime.now())}
 
