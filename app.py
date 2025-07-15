@@ -4,18 +4,28 @@ from datetime import datetime, timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 
+# Konfigurace přístupu ke Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+
+# Vytvoření credentials z tajných údajů
 creds_dict = {
     "type": "service_account",
-    "client_email": st.secrets["gspread"]["email"],
+    "project_id": st.secrets["gspread"]["project_id"],
+    "private_key_id": st.secrets["gspread"]["private_key_id"],
     "private_key": st.secrets["gspread"]["private_key"].replace('\\n', '\n'),
+    "client_email": st.secrets["gspread"]["client_email"],
+    "client_id": st.secrets["gspread"]["client_id"],
+    "auth_uri": st.secrets["gspread"]["auth_uri"],
+    "token_uri": st.secrets["gspread"]["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["gspread"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["gspread"]["client_x509_cert_url"]
 }
+
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open(st.secrets["gspread"]["sheet"])
 
-
-# Načíst přihlašovací údaje
+# Přístup k jednotlivým listům
 access_df = pd.DataFrame(sheet.worksheet("access").get_all_records())
 data_ws = sheet.worksheet("data")
 
@@ -39,20 +49,24 @@ if not st.session_state.logged_in:
 else:
     st.title(f"Vítej, {st.session_state.username}")
 
-    # Záznam o odběru
+    # Formulář pro nový odběr
     with st.form("novy_odber"):
         place = st.text_input("Místo odběru")
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
         if submitted:
-            data_ws.append_row([st.session_state.username, str(date), place])
-            st.success("Záznam uložen")
+            if place.strip() == "":
+                st.error("Zadej místo odběru")
+            else:
+                data_ws.append_row([st.session_state.username, str(date), place])
+                st.success("Záznam uložen")
 
     # Statistiky
     data_df = pd.DataFrame(data_ws.get_all_records())
     user_data = data_df[data_df["username"] == st.session_state.username]
-    user_data["date"] = pd.to_datetime(user_data["date"])
+
     if not user_data.empty:
+        user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
         last_donation = user_data["date"].max()
         next_possible = last_donation + timedelta(weeks=10)
         st.subheader("Statistiky")
