@@ -69,14 +69,14 @@ else:
     # Formulář pro nový odběr
     records = sheet.worksheet("data").get_all_records()
     places = sorted(set([rec["location"] for rec in records if rec["location"].strip() != ""])) if records else []
-    places_options = places + ["➕ Přidat nové místo"]
+    places_options = places + ["-Přidat nové místo-"]
 
     with st.form("novy_odber"):
         place_choice = st.selectbox("Vyber místo odběru", places_options)
         place_input = ""
     
         # Textové pole je vždy, ale aktivní jen když je vybráno "Přidat nové místo"
-        if place_choice == "➕ Přidat nové místo":
+        if place_choice == "-Přidat nové místo-":
             place_input = st.text_input("Zadej nové místo odběru", value="")
         else:
             # Zobrazíme text_input zakázané, aby uživatel viděl, že je neaktivní
