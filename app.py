@@ -65,23 +65,24 @@ else:
                 st.success("Záznam uložen")
 
     # Statistiky
-    data_df = pd.DataFrame(sheet.worksheet("data").get_all_records())
-    if data_df.columns[0] != "username":
-        data_df.columns = ["username", "date", "place"]
-    user_data = data_df[data_df["username"] == st.session_state.username]
-
-    user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
-    user_data = user_data.dropna(subset=["date"])
-
-    if not user_data.empty:
-        last_donation = user_data["date"].max()
-        next_possible = last_donation + timedelta(weeks=10)
-        st.subheader("Statistiky")
-        st.write(f"Počet odběrů: {len(user_data)}")
-        st.write(f"Poslední odběr: {last_donation.date()}")
-        st.write(f"Další možný odběr: {next_possible.date()}")
+    records = sheet.worksheet("data").get_all_records()
+    if not records:
+        st.info("Zatím nejsou žádná data.")
     else:
-        st.info("Zatím nemáte žádný platný záznam o odběru.")
+        data_df = pd.DataFrame(records)
+        user_data = data_df[data_df["username"] == st.session_state.username]
+        user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
+        user_data = user_data.dropna(subset=["date"])
+        
+        if not user_data.empty:
+            last_donation = user_data["date"].max()
+            next_possible = last_donation + timedelta(weeks=10)
+            st.subheader("Statistiky")
+            st.write(f"Počet odběrů: {len(user_data)}")
+            st.write(f"Poslední odběr: {last_donation.date()}")
+            st.write(f"Další možný odběr: {next_possible.date()}")
+        else:
+            st.info("Nemáte žádný validní záznam.")
 
     if st.button("Odhlásit se"):
         st.session_state.logged_in = False
