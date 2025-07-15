@@ -67,14 +67,26 @@ else:
     st.title(f"Vítej, {st.session_state.username}")
 
     # Formulář pro nový odběr
+    records = sheet.worksheet("data").get_all_records()
+    places = sorted(set([rec["place"] for rec in records if rec["place"].strip() != ""])) if records else []
+    places_options = places + ["➕ Přidat nové místo"]
+
     with st.form("novy_odber"):
-        place = st.text_input("Místo odběru")
+        place_choice = st.selectbox("Vyber místo odběru", places_options)
+
+        if place_choice == "➕ Přidat nové místo":
+            place = st.text_input("Zadej nové místo odběru")
+        else:
+            place = place_choice
+
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
+
         if submitted:
             if place.strip() == "":
                 st.error("Zadej místo odběru")
             else:
+                # Uložíme aktuální datum (můžeš chtít použít date z formuláře, ale v původním kódu je to vždy dnes)
                 today = datetime.today().date()
                 sheet.worksheet("data").append_row([st.session_state.username, place, str(today)])
                 st.success("Záznam uložen")
