@@ -66,6 +66,8 @@ else:
 
     # Statistiky
     data_df = pd.DataFrame(sheet.worksheet("data").get_all_records())
+    if data_df.columns[0] != "username":
+        data_df.columns = ["username", "date", "place"]
     user_data = data_df[data_df["username"] == st.session_state.username]
 
     user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
