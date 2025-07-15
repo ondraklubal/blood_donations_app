@@ -62,6 +62,7 @@ else:
                 st.success("Záznam uložen")
 
     # Statistiky
+    data_ws = pd.DataFrame(sheet.worksheet("data").get_all_records())
     user_data = data_df[data_df["username"] == st.session_state.username]
 
     user_data["date"] = pd.to_datetime(user_data["date"], errors='coerce')
