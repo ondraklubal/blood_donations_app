@@ -15,7 +15,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope
 
 gc = gspread.authorize(credentials)
 
-sheet = client.open("blood_donations").sheet1  # název tabulky
+sheet = client.open("Blood_donations").sheet1  # název tabulky
 
 def add_donation(username, location, date):
     sheet.append_row([username, location, date])
