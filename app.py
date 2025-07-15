@@ -35,7 +35,6 @@ if "logged_in" not in st.session_state:
 
 
 if not st.session_state.logged_in:
-    params = st.query_params
 
     st.title("Přihlášení")
     new_account = st.checkbox("🆕 Vytvořit nový účet")
@@ -44,25 +43,24 @@ if not st.session_state.logged_in:
     password = st.text_input("Heslo", type="password")
     if st.button("Přihlásit se" if not new_account else "Vytvořit účet"):
         access_ws = sheet.worksheet("access")
-    access_df = pd.DataFrame(access_ws.get_all_records())
+        access_df = pd.DataFrame(access_ws.get_all_records())
 
-    if new_account:
-        if username in access_df["username"].values:
-            st.error("Uživatel již existuje.")
+        if new_account:
+            if username in access_df["username"].values:
+                st.error("Uživatel již existuje.")
+            else:
+                access_ws.append_row([username, password])
+                st.success("Účet vytvořen. Nyní jste přihlášen.")
+                st.session_state.username = username
         else:
-            access_ws.append_row([username, password])
-            st.success("Účet vytvořen. Nyní jste přihlášen.")
-            st.session_state.username = username
-    else:
-        match = access_df[(access_df["username"] == username) & (access_df["password"] == password)]
-        if not match.empty:
-            st.session_state.username = username
-            st.success(f"Přihlášen jako {username}")
-            st.rerun()
-        else:
-            st.error("Nesprávné přihlašovací údaje.")
+            match = access_df[(access_df["username"] == username) & (access_df["password"] == password)]
+            if not match.empty:
+                st.session_state.username = username
+                st.success(f"Přihlášen jako {username}")
+                st.rerun()
+            else:
+                st.error("Nesprávné přihlašovací údaje.")
 else:
-    params = st.query_params
 
     st.title(f"Vítej, {st.session_state.username}")
 
