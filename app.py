@@ -99,14 +99,8 @@ else:
             total_donations = len(user_data)  # počet odběrů uživatele
             
             st.title("Ocenění dárců krve a tvůj postup")
-            
-            cols = st.columns(2)
-            
+                        
             for i, award in enumerate(awards):
-                col = cols[i % 2]
-            
-                with col:
-                    #st.image(award["img"], width=50)
                     st.markdown(f"### {award['emoji']} {award['name']}")
             
                     remaining = max(0, award["needed"] - total_donations)
