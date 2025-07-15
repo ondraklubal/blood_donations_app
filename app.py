@@ -1,12 +1,16 @@
-import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import datetime
+import json
+import streamlit as st
 
-# Google Sheets setup
+# Převést tajemství z .secrets na dict
+creds_dict = dict(st.secrets["gspread"])
+
+# Gspread potřebuje credentials jako objekt, nikoliv dict
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
-client = gspread.authorize(creds)
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+
+gc = gspread.authorize(credentials)
 
 sheet = client.open("blood_donations").sheet1  # název tabulky
 
