@@ -73,22 +73,26 @@ else:
 
     with st.form("novy_odber"):
         place_choice = st.selectbox("Vyber místo odběru", places_options)
-
+        place_input = ""
+    
+        # Textové pole je vždy, ale aktivní jen když je vybráno "Přidat nové místo"
         if place_choice == "➕ Přidat nové místo":
-            place = st.text_input("Zadej nové místo odběru")
+            place_input = st.text_input("Zadej nové místo odběru", value="")
         else:
-            place = place_choice
-
+            # Zobrazíme text_input zakázané, aby uživatel viděl, že je neaktivní
+            st.text_input("Zadej nové místo odběru", value="", disabled=True)
+    
         date = st.date_input("Datum odběru")
         submitted = st.form_submit_button("Uložit záznam")
-
+    
         if submitted:
-            if place.strip() == "":
+            # Určíme výsledné místo
+            final_place = place_input.strip() if place_choice == "➕ Přidat nové místo" else place_choice
+            if final_place == "":
                 st.error("Zadej místo odběru")
             else:
-                # Uložíme aktuální datum (můžeš chtít použít date z formuláře, ale v původním kódu je to vždy dnes)
                 today = datetime.today().date()
-                sheet.worksheet("data").append_row([st.session_state.username, place, str(today)])
+                sheet.worksheet("data").append_row([st.session_state.username, final_place, str(today)])
                 st.success("Záznam uložen")
 
     # Statistiky
