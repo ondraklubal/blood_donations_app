@@ -39,13 +39,13 @@ if not st.session_state.logged_in:
     password = st.text_input("Heslo", type="password")
     if st.button("Přihlásit se"):
         user = access_df[(access_df["username"] == username) & (access_df["password"] == password)]
-    if not user.empty:
-        st.session_state.logged_in = True
-        st.session_state.username = username
-        st.success("Přihlášení úspěšné")
-        st.experimental_set_query_params(refresh=str(datetime.now()))
-    else:
-        st.error("Neplatné jméno nebo heslo")
+        if not user.empty:
+            st.session_state.logged_in = True
+            st.session_state.username = username
+            st.success("Přihlášení úspěšné")
+            st.experimental_set_query_params(refresh=str(datetime.now()))
+        else:
+            st.error("Neplatné jméno nebo heslo")
 else:
     st.title(f"Vítej, {st.session_state.username}")
 
