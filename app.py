@@ -101,18 +101,18 @@ else:
             st.title("Ocenění dárců krve a tvůj postup")
                         
             for i, award in enumerate(awards):
-                    st.markdown(f"### {award['emoji']} {award['name']}")
+                st.markdown(f"### {award['emoji']} {award['name']}")
             
-                    remaining = max(0, award["needed"] - total_donations)
-                    progress = min(total_donations / award["needed"], 1.0)
+                remaining = max(0, award["needed"] - total_donations)
+                progress = min(total_donations / award["needed"], 1.0)
             
-                    if progress == 1.0:
-                        st.success("🎉 Ocenění splněno!")
-                    else:
-                        st.info(f"Zbývá {remaining} odběrů")
+                if progress == 1.0:
+                    st.success("🎉 Ocenění splněno!")
+                else:
+                    st.info(f"Zbývá {remaining} odběrů")
             
-                    st.progress(progress)
-                    st.markdown("---")
+                st.progress(progress)
+                st.markdown("---")
         else:
             st.info("Nemáte žádný validní záznam.")
 
