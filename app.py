@@ -52,17 +52,19 @@ if not st.session_state.logged_in:
                 access_ws.append_row([username, password])
                 st.success("Účet vytvořen. Nyní jste přihlášen.")
                 st.session_state.username = username
+                st.session_state.logged_in = True
                 st.rerun()
         else:
             match = access_df[(access_df["username"] == username) & (access_df["password"] == password)]
             if not match.empty:
                 st.session_state.username = username
                 st.success(f"Přihlášen jako {username}")
+                st.session_state.logged_in = True
                 st.rerun()
             else:
                 st.error("Nesprávné přihlašovací údaje.")
 else:
-
+    params = st.query_params()
     st.title(f"Vítej, {st.session_state.username}")
 
     # Formulář pro nový odběr
